@@ -5,7 +5,6 @@ $ ruby weatherrb [address]
 例:
 ~~~
 $ ruby weather.rb 千代田区
-ruby weather.rb 千代田区
 {
   "address": "千代田区",
   "longitude": 139.753595,
