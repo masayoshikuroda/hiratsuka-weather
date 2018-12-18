@@ -3,7 +3,7 @@
 $ ruby weatherrb [address]
 
 例:
-
+~~~
 $ ruby weather.rb 千代田区
 ruby weather.rb 千代田区
 {
@@ -22,3 +22,4 @@ ruby weather.rb 千代田区
   "message": "現在の天気は晴れ。気温6.9 ℃、湿度49 %です。"
 }
 $
+~~~
