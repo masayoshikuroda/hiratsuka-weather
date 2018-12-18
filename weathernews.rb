@@ -17,7 +17,7 @@ class WeatherNews
     @lang = 'ja'
 
     url = getUrl()
-    puts url
+    #puts url
     html = open(url) do |f| f.read end
     page = Nokogiri::HTML.parse(html, nil, 'UTF-8')
 

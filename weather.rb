@@ -1,26 +1,27 @@
-require "./weathernews.rb"
+require_relative 'geocoding'
+require_relative 'weathernews'
 
-LON = 35.32783
-LAT = 139.350645
-
-wn = WeatherNews.new(LON, LAT)
+address = ARGV.length == 0 ? '平塚' : ARGV[0]
+g = Geocoding.new(address)
+wn = WeatherNews.new(g.lat, g.lng)
 message  = "現在の天気は" + wn.tenki + '。'
 message += '気温' + wn.temp + '、'
 message += '湿度' + wn.humid
 message += 'です。'
 
 puts '{'
-puts '  "longitude": '   + LON.to_s + ','
-puts '  "lattitude": '   + LAT.to_s + ','
-puts '  "title": '       + wn.title + ','
-puts '  "time": '        + wn.time  + ','
-puts '  "weather": '     + wn.tenki + ','
-puts '  "temperature": ' + wn.temp  + ',' 
-puts '  "humidity": '    + wn.humid + ','
-puts '  "pressure": '    + wn.press + ','
-puts '  "wind": '        + wn.wind  + ','
-puts '  "sunrise": '     + wn.sunrise + ','
-puts '  "sunset": '      + wn.sunset
-puts '  "message": '     + message
+puts '  "address": '     + sprintf('"%s"', g.address)+ ','
+puts '  "longitude": '   + g.lng.to_s + ','
+puts '  "lattitude": '   + g.lat.to_s + ','
+puts '  "title": '       + sprintf('"%s"', wn.title) + ','
+puts '  "time": '        + sprintf('"%s"', wn.time)  + ','
+puts '  "weather": '     + sprintf('"%s"', wn.tenki) + ','
+puts '  "temperature": ' + sprintf('"%s"', wn.temp)  + ',' 
+puts '  "humidity": '    + sprintf('"%s"', wn.humid) + ','
+puts '  "pressure": '    + sprintf('"%s"', wn.press) + ','
+puts '  "wind": '        + sprintf('"%s"', wn.wind)  + ','
+puts '  "sunrise": '     + sprintf('"%s"', wn.sunrise) + ','
+puts '  "sunset": '      + sprintf('"%s"', wn.sunset)  + ','
+puts '  "message": '     + sprintf('"%s"', message)
 puts '}'
 
