@@ -17,26 +17,36 @@ class WeatherNews
     @lang = 'ja'
 
     url = getUrl()
-    #puts url
     html = open(url) do |f| f.read end
     page = Nokogiri::HTML.parse(html, nil, 'UTF-8')
 
-    @title = page.css("h1.title_now").inner_text
-    elem = page.css("div.flex_radar.mb > div.obs_text")
-    status = elem.css("div.text_box > span.sub").inner_text
-    @time  = status.split(', ')[0]
-    @tenki = status.split(', ')[1]
-    @temp = elem.css("td.obs_temp > span.obs_temp_main").inner_text
-    @temp +=  " " +  elem.css("td.obs_temp > span.obs_temp_sub").inner_text
-    elems = elem.css("table.table-obs_sub > tr")
-    @humid    = elems[0].css('td')[1].inner_text.split(":")[1].strip 
-    @press    = elems[1].css('td')[1].inner_text.split(":")[1].strip
-    @wind     = elems[2].css('td')[1].inner_text.split(":")[1].strip
-    @sunrise  = elems[3].css("td")[1].inner_text.split(":")[1..2].join(":").strip
-    @sunset   = elems[4].css("td")[1].inner_text.split(":")[1..2].join(":").strip
+    @title = page.css("p.tit-01")[0].text
+    cont = page.css("div.weather-now__cont")
+    @time = cont.css('p').inner_text
+    ul = cont.css("ul.weather-now__ul")
+    @tenki = ul.css("li")[0].text.slice(2..10)
+    @temp  = ul.css("li")[1].text.slice(2..10)
+    @humid = ul.css("li")[2].text.slice(2..10)
+    @press = ul.css("li")[3].text.slice(2..10)
+    @wind  = ul.css("li")[4].text.slice(2..10)
+    sun = ul.css("li")[5].inner_text.strip
+    @sunrise  = sun.split("|")[0].strip.slice(4..8).strip
+    @sunset   = sun.split("|")[1].strip.slice(5..9).strip
    end
 
   def getUrl()
     return "#{BASE_URL}/%.6f/%.6f/temp=#{@temp}&lang=#{@lang}" % [@lon, @lat]
   end
+end
+
+if $0 == __FILE__ then
+  lng = 139.35
+  lat = 35.33
+  wn = WeatherNews.new(lat, lng)
+  puts wn.getUrl()
+  puts wn.title
+  puts wn.time, wn.tenki
+  puts wn.temp, wn.humid, wn.press
+  puts wn.wind
+  puts wn.sunrise, wn.sunset
 end

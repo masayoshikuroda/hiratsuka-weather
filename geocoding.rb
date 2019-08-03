@@ -23,3 +23,11 @@ class Geocoding
    return URI.escape(url)
   end
 end
+
+if $0 == __FILE__ then
+  address = ARGV.length == 0 ? '平塚' : ARGV[0]
+  g = Geocoding.new(address)
+  puts "address:  " + address
+  puts "longitude: " + g.lng
+  puts "latitude:  " + g.lat
+end
