@@ -22,6 +22,7 @@ puts '  "pressure": '    + sprintf('"%s"', wn.press) + ','
 puts '  "wind": '        + sprintf('"%s"', wn.wind)  + ','
 puts '  "sunrise": '     + sprintf('"%s"', wn.sunrise) + ','
 puts '  "sunset": '      + sprintf('"%s"', wn.sunset)  + ','
+puts '  "iconurl": '     + sprintf('"%s"', wn.iconurl) + ','
 puts '  "message": '     + sprintf('"%s"', message)
 puts '}'
 

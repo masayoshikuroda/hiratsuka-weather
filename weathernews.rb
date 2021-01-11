@@ -7,6 +7,7 @@ class WeatherNews
   attr_reader :temp, :unit
   attr_reader :humid, :press, :wind
   attr_reader :sunrise, :sunset
+  attr_reader :iconurl
 
   BASE_URL = 'http://weathernews.jp/onebox'
 
@@ -32,7 +33,26 @@ class WeatherNews
     sun = ul.css("li")[5].inner_text.strip
     @sunrise  = sun.split("|")[0].strip.slice(4..8).strip
     @sunset   = sun.split("|")[1].strip.slice(5..9).strip
-   end
+    
+    case @tenki
+    when "はれ"           then icon = "100.png"
+    when "はれのち曇り"   then icon = "101.png"
+    when "はれのち雨"     then icon = "102.png"
+    when "くもり"         then icon = "200.png"
+    when "くもりのちはれ" then icon = "201.png"
+    when "くもりのちあめ" then icon = "202.png"
+    when "あめ"           then icon = "300.png"
+    when "あめのちはれ"   then icon = "301.png"
+    when "あめのちくもり" then icon = "302.png"
+    when "あめのちゆき"   then icon = "303.png"
+    when "ゆき"           then icon = "400.png"
+    when "ゆきのちはれ"   then icon = "401.png"
+    when "ゆきのちくもり" then icon = "402.png"
+    when "ゆきのちあめ"   then icon = "403.png"
+    else                       icon = "100.png"
+    end
+    @iconurl = "https://smtgvs.weathernews.jp/onebox/img/wxicon/" + icon
+  end
 
   def getUrl()
     return "#{BASE_URL}/%.6f/%.6f/temp=#{@temp}&lang=#{@lang}" % [@lon, @lat]
@@ -49,4 +69,5 @@ if $0 == __FILE__ then
   puts wn.temp, wn.humid, wn.press
   puts wn.wind
   puts wn.sunrise, wn.sunset
+  puts wn.iconurl
 end
