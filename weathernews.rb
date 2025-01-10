@@ -9,7 +9,7 @@ class WeatherNews
   attr_reader :sunrise, :sunset
   attr_reader :iconurl
 
-  BASE_URL = 'http://weathernews.jp/onebox'
+  BASE_URL = 'http://onpre.weathernews.jp/onebox'
 
   def initialize(lon, lat)
     @lon = lon
